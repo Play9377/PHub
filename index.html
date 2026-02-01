@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CryptoHub 2026 - 龙虾螃蟹加密版</title>
+    <style>
+        :root {
+            --bg: #f0f2f5; --card: #ffffff; --text: #1c1e21; --border: #dddfe2;
+            --primary: #007bff; --success: #28a745; --util: #636e72; --danger: #dc3545;
+        }
+        [data-theme="dark"] {
+            --bg: #18191a; --card: #242526; --text: #e4e6eb; --border: #3e4042;
+            --primary: #2d88ff; --success: #45bd62; --util: #94a3b8; --danger: #f35369;
+        }
+        body { 
+            background: var(--bg); color: var(--text); font-family: system-ui, -apple-system, sans-serif; 
+            transition: 0.3s; margin: 0; padding: env(safe-area-inset-top) 10px;
+            display: flex; justify-content: center; min-height: 100vh;
+        }
+        .container { width: 100%; max-width: 1000px; margin: 20px auto; }
+        .main-card { background: var(--card); border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); padding: 20px; border: 1px solid var(--border); }
+        
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .header h1 { font-size: 1.25rem; margin: 0; color: var(--primary); }
+
+        .btn-grid { 
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); 
+            gap: 10px; margin-bottom: 20px; 
+        }
+        @media (max-width: 480px) { .btn-grid { grid-template-columns: 1fr 1fr; } }
+
+        .btn-group { display: flex; background: var(--bg); padding: 4px; border-radius: 10px; border: 1px solid var(--border); }
+        .btn-group button { flex: 1; border: none; padding: 10px 2px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: bold; transition: 0.2s; }
+        .enc { background: var(--primary); color: white; margin-right: 4px; }
+        .dec { background: var(--success); color: white; }
+        .enc:active, .dec:active { transform: scale(0.95); }
+
+        .io-area { display: flex; flex-direction: column; gap: 15px; }
+        @media (min-width: 769px) { .io-area { flex-direction: row; } }
+        .field { flex: 1; display: flex; flex-direction: column; gap: 8px; }
+        textarea { 
+            width: 100%; height: 180px; padding: 12px; border: 2px solid var(--border); 
+            border-radius: 12px; background: var(--bg); color: var(--text); 
+            resize: none; box-sizing: border-box; font-family: monospace; font-size: 14px;
+        }
+        textarea:focus { border-color: var(--primary); outline: none; }
+
+        .bottom-actions { display: flex; gap: 10px; margin-top: 20px; }
+        .act-btn { flex: 1; padding: 15px; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; color: white; }
+        .copy-btn { background: var(--primary); }
+        .clear-btn { background: var(--util); }
+        .theme-btn { padding: 8px 15px; border-radius: 20px; background: var(--bg); border: 1px solid var(--border); color: var(--text); cursor: pointer; }
+    </style>
+</head>
+<body data-theme="light">
+
+<div class="container">
+    <div class="main-card">
+        <div class="header">
+            <h1>🛡️ CryptoHub 2026</h1>
+            <button class="theme-btn" onclick="toggleTheme()">🌓 切换模式</button>
+        </div>
+
+        <div class="btn-grid">
+            <div class="btn-group"><button class="enc" onclick="op('b64E')">Base64</button><button class="dec" onclick="op('b64D')">还原</button></div>
+            <div class="btn-group"><button class="enc" onclick="op('b32E')">Base32</button><button class="dec" onclick="op('b32D')">还原</button></div>
+            <div class="btn-group"><button class="enc" onclick="op('hexE')">Hex 16进制</button><button class="dec" onclick="op('hexD')">还原</button></div>
+            <div class="btn-group"><button class="enc" onclick="op('urlE')">URL 编码</button><button class="dec" onclick="op('urlD')">还原</button></div>
+            <div class="btn-group"><button class="enc" onclick="op('caeE')">凯撒位移</button><button class="dec" onclick="op('caeD')">还原</button></div>
+            <div class="btn-group"><button class="enc" onclick="op('maE')">玛卡加密</button><button class="dec" onclick="op('maD')">还原</button></div>
+            <div class="btn-group"><button class="enc" onclick="op('abaE')">阿巴加密</button><button class="dec" onclick="op('abaD')">还原</button></div>
+            <div class="btn-group"><button class="enc" onclick="op('makaE')">玛卡巴卡</button><button class="dec" onclick="op('makaD')">还原</button></div>
+            <div class="btn-group"><button class="enc" onclick="op('sbE')">傻逼加密</button><button class="dec" onclick="op('sbD')">还原</button></div>
+            <div class="btn-group"><button class="enc" onclick="op('dnaE')">DNA 加密</button><button class="dec" onclick="op('dnaD')">还原</button></div>
+            <div class="btn-group"><button class="enc" onclick="op('binE')">二进制</button><button class="dec" onclick="op('binD')">还原</button></div>
+            <div class="btn-group"><button class="enc" onclick="op('triE')">三进制</button><button class="dec" onclick="op('triD')">还原</button></div>
+            
+            <!-- 底部特定位置 -->
+            <div class="btn-group"><button class="enc" onclick="op('uniE')">Unicode</button><button class="dec" onclick="op('uniD')">还原</button></div>
+            <div class="btn-group"><button class="enc" onclick="op('gluE')">咕噜加密</button><button class="dec" onclick="op('gluD')">还原</button></div>
+            <div class="btn-group"><button class="enc" onclick="op('seaE')">🦞🦀 加密</button><button class="dec" onclick="op('seaD')">还原</button></div>
+        </div>
+
+        <div class="io-area">
+            <div class="field">
+                <label>📋 输入内容：</label>
+                <textarea id="input" placeholder="输入任何文字、Emoji或代码..."></textarea>
+            </div>
+            <div class="field">
+                <label>✨ 处理结果：</label>
+                <textarea id="output" readonly placeholder="点击上方按钮生成..."></textarea>
+            </div>
+        </div>
+
+        <div class="bottom-actions">
+            <button class="act-btn copy-btn" onclick="copy()">复制结果</button>
+            <button class="act-btn clear-btn" onclick="clearAll()">清空全部</button>
+        </div>
+    </div>
+</div>
+<script>
+    function toggleTheme() {
+        const b = document.body;
+        b.getAttribute('data-theme') === 'dark' ? b.setAttribute('data-theme', 'light') : b.setAttribute('data-theme', 'dark');
+    }
+
+    const utf8ToBin = s => Array.from(new TextEncoder().encode(s)).map(b => b.toString(2).padStart(8, '0')).join('');
+    const binToUtf8 = b => {
+        try {
+            const bytes = b.match(/.{8}/g).map(x => parseInt(x, 2));
+            return new TextDecoder().decode(new Uint8Array(bytes));
+        } catch(e) { return "❌ 解码失败"; }
+    }
+
+    const B32_ALPH = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
+    const b32E = s => {
+        let bin = utf8ToBin(s);
+        let res = "";
+        for (let i = 0; i < bin.length; i += 5) {
+            let chunk = bin.substring(i, i + 5).padEnd(5, '0');
+            res += B32_ALPH[parseInt(chunk, 2)];
+        }
+        return res;
+    };
+    const b32D = s => {
+        let bin = s.split('').map(c => B32_ALPH.indexOf(c.toUpperCase()).toString(2).padStart(5, '0')).join('');
+        return binToUtf8(bin);
+    };
+
+    function op(type) {
+        const val = document.getElementById('input').value.trim();
+        const out = document.getElementById('output');
+        if(!val) return;
+
+        try {
+            switch(type) {
+                case 'seaE': out.value = utf8ToBin(val).replace(/0/g, '🦞').replace(/1/g, '🦀'); break;
+                case 'seaD': out.value = binToUtf8(val.replace(/🦞/g, '0').replace(/🦀/g, '1')); break;
+                case 'uniE': out.value = val.replace(/./g, c => "\\u" + c.charCodeAt(0).toString(16).padStart(4, '0')); break;
+                case 'uniD': out.value = val.replace(/\\u([\d\w]{4})/gi, (m, g) => String.fromCharCode(parseInt(g, 16))); break;
+                case 'gluE': out.value = utf8ToBin(val).replace(/0/g, '咕').replace(/1/g, '噜'); break;
+                case 'gluD': out.value = binToUtf8(val.replace(/咕/g, '0').replace(/噜/g, '1')); break;
+                case 'caeE': out.value = val.replace(/./g, c => String.fromCharCode(c.charCodeAt(0) + 3)); break;
+                case 'caeD': out.value = val.replace(/./g, c => String.fromCharCode(c.charCodeAt(0) - 3)); break;
+                case 'maE': out.value = utf8ToBin(val).replace(/0/g, '玛').replace(/1/g, '卡'); break;
+                case 'maD': out.value = binToUtf8(val.replace(/玛/g, '0').replace(/卡/g, '1')); break;
+                case 'abaE': out.value = utf8ToBin(val).replace(/0/g, '阿').replace(/1/g, '巴'); break;
+                case 'abaD': out.value = binToUtf8(val.replace(/阿/g, '0').replace(/巴/g, '1')); break;
+                case 'makaE': out.value = utf8ToBin(val).replace(/0/g, '玛卡').replace(/1/g, '巴卡'); break;
+                case 'makaD': out.value = binToUtf8(val.replace(/玛卡/g, '0').replace(/巴卡/g, '1')); break;
+                case 'sbE': out.value = utf8ToBin(val).replace(/0/g, '傻').replace(/1/g, '逼'); break;
+                case 'sbD': out.value = binToUtf8(val.replace(/傻/g, '0').replace(/逼/g, '1')); break;
+                case 'dnaE': out.value = utf8ToBin(val).replace(/00/g,'A').replace(/01/g,'C').replace(/10/g,'G').replace(/11/g,'T'); break;
+                case 'dnaD': out.value = binToUtf8(val.replace(/A/g,'00').replace(/C/g,'01').replace(/G/g,'10').replace(/T/g,'11')); break;
+                case 'binE': out.value = utf8ToBin(val); break;
+                case 'binD': out.value = binToUtf8(val); break;
+                case 'triE': out.value = Array.from(new TextEncoder().encode(val)).map(b => b.toString(3)).join(' '); break;
+                case 'triD': out.value = new TextDecoder().decode(new Uint8Array(val.split(' ').map(x => parseInt(x, 3)))); break;
+                case 'b64E': out.value = btoa(unescape(encodeURIComponent(val))); break;
+                case 'b64D': out.value = decodeURIComponent(escape(atob(val))); break;
+                case 'b32E': out.value = b32E(val); break;
+                case 'b32D': out.value = b32D(val); break;
+                case 'hexE': out.value = Array.from(new TextEncoder().encode(val)).map(b => b.toString(16).padStart(2,'0')).join(' '); break;
+                case 'hexD': out.value = new TextDecoder().decode(new Uint8Array(val.split(' ').map(h => parseInt(h, 16)))); break;
+                case 'urlE': out.value = encodeURIComponent(val); break;
+                case 'urlD': out.value = decodeURIComponent(val); break;
+            }
+        } catch(e) { out.value = "⚠️ 处理失败：输入格式不匹配"; }
+    }
+
+    function copy() {
+        const o = document.getElementById('output');
+        if(!o.value) return;
+        o.select();
+        o.setSelectionRange(0, 99999);
+        navigator.clipboard.writeText(o.value).then(() => alert("✅ 已复制结果"));
+    }
+
+    function clearAll() {
+        document.getElementById('input').value = "";
+        document.getElementById('output').value = "";
+    }
+</script>
+</body>
+</html>
